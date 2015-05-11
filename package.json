@@ -1,0 +1,29 @@
+{
+  "name": "async",
+  "version": "1.0.0",
+  "description": "Exploring options for handling async better",
+  "main": "index.js",
+  "scripts": {
+    "test": "node --harmony_arrow_functions --harmony_classes test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "http://github.com/stevekane/async-playground.git"
+  },
+  "engine": "node 2.0.1",
+  "keywords": [
+    "async",
+    "monad",
+    "future",
+    "await"
+  ],
+  "author": "Steve Kane",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/stevekane/async-playground/issues"
+  },
+  "homepage": "https://github.com/stevekane/async-playground",
+  "devDependencies": {
+    "tape": "^4.0.0"
+  }
+}
