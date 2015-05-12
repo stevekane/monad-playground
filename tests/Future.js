@@ -1,7 +1,7 @@
 'use strict'
 
 const test = require('tape')
-const Future = require('../Future')
+const Future = require('../src/Future')
 
 function matches (t, ref) { 
   return function (val) { 

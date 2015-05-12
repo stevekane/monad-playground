@@ -1,6 +1,6 @@
 'use strict'
 
-const Maybe = require('./Maybe')
+const Maybe = require('./src/Maybe')
 const bind = Maybe.bind
 const unit = Maybe.unit
 const Just = Maybe.Just

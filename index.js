@@ -1,4 +1,4 @@
 'use strict'
 
-module.exports.Future = require('./Future')
-module.exports.Maybe = require('./Maybe')
+module.exports.Future = require('./src/Future')
+module.exports.Maybe = require('./src/Maybe')
