@@ -4,7 +4,8 @@
   "description": "Exploring options for handling async better",
   "main": "index.js",
   "scripts": {
-    "test": "node --harmony_arrow_functions --harmony_classes test.js"
+    "test": "node --harmony_arrow_functions --harmony_classes test.js",
+    "quick": "sjs --module ./macros/infix.js quick.js | node --harmony_arrow_functions --harmony_classes" 
   },
   "repository": {
     "type": "git",
@@ -22,7 +23,7 @@
   "bugs": {
     "url": "https://github.com/stevekane/async-playground/issues"
   },
-  "homepage": "https://github.com/stevekane/async-playground",
+  "homepage": "https://github.com/stevekane/monad-playground",
   "devDependencies": {
     "tape": "^4.0.0"
   }
