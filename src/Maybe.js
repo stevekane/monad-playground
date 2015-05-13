@@ -19,9 +19,7 @@ Just.prototype.unit = unit
 Just.prototype.bind = bind
 Just.prototype.fmap = fmap
 
-function Nothing () {
-  this.value = null
-}
+function Nothing () {}
 
 Nothing.prototype.unit = unit
 Nothing.prototype.bind = bind

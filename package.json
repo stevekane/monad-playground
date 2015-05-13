@@ -6,7 +6,7 @@
   "scripts": {
     "test": "node --harmony_arrow_functions --harmony_classes test.js",
     "quick": "sjs --module ./macros/infix.js quick.js | node --harmony_arrow_functions --harmony_classes",
-    "ts": "tsc --module commonjs -outDir compiled tssrc/*.ts && cat compiled/main.js && node compiled/main.js"
+    "ts": "tsc --module commonjs -outDir compiled tssrc/*.ts && cat compiled/main.js"
   },
   "repository": {
     "type": "git",
