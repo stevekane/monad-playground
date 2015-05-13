@@ -1,13 +1,50 @@
 'use strict'
 
+const log = (x) => console.log(x.toString())
 const Maybe = require('./src/Maybe')
-const bind = Maybe.bind
-const unit = Maybe.unit
+const Either = require('./src/Either')
 const Just = Maybe.Just
 const Nothing = Maybe.Nothing
+const Left = Either.Left
+const Right = Either.Right
 
-const add1 = (x) => x + 1
+const add1 = (x) => new Just(x + 1)
+const getError = (x) => new Left('things went south')
+const safeIterate = (x) => new Right(x + 1)
 
-const result = unit(1) >>= add1 >>= add1
+// findWhere (Object a) :: [a] -> Object -> Either null a
+function findWhere (list, hash) {
+  var keys = Object.keys(hash)
+  var stillValid = true
 
-console.log(result)
+  for (var i = 0; i < list.length; i++) {
+    stillValid = true
+    for (var j = 0; j < keys.length; j++) {
+      if (list[i][keys[j]] !== hash[keys[j]]) {
+        stillValid = false
+        break
+      }
+    } 
+    if (stillValid) return new Right(list[i])
+  }
+  return new Left(null)
+}
+
+const list = [{age: 5, id: 1}, {age: 3, id: 2}]
+
+const result = Maybe.unit(1) >>= add1 >>= add1
+
+const possible = Either.unit(5) >>= 
+                 getError >>= 
+                 safeIterate 
+const forSure = Either.unit(3) >>=
+                safeIterate >>=
+                safeIterate >>=
+                safeIterate
+
+log(findWhere(list, {age: 5}))
+log(findWhere(list, {age: 4}))
+log(findWhere(list, {age: 3}))
+log(result)
+log(possible)
+log(forSure)
