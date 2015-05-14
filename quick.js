@@ -32,19 +32,21 @@ function findWhere (list, hash) {
 
 const list = [{age: 5, id: 1}, {age: 3, id: 2}]
 
-const result = Maybe.unit(1) >>= add1 >>= add1
+const result = Maybe.Interface.unit(1) >>= add1 >>= add1
 
-const possible = Either.unit(5) >>= 
+const possible = Either.Interface.unit(5) >>= 
                  getError >>= 
                  safeIterate 
-const forSure = Either.unit(3) >>=
+const forSure = Either.Interface.unit(3) >>=
                 safeIterate >>=
                 safeIterate >>=
                 safeIterate
 
-log(findWhere(list, {age: 5}))
-log(findWhere(list, {age: 4}))
-log(findWhere(list, {age: 3}))
+const match = findWhere(list, {age: 5})
+const possibleMatch = findWhere(list, {age: 4})
+
+log(match)
+log(possibleMatch)
 log(result)
 log(possible)
 log(forSure)

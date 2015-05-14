@@ -1,4 +1,4 @@
 operator (>>=) 15 left 
-  { $left, $right } => #{ $left.bind($left, $right) }
+  { $left, $right } => #{ $left.bindM($left, $right) }
 
 export >>=
