@@ -8,51 +8,73 @@ const Nothing = Maybe.Nothing
 const Left = Either.Left
 const Right = Either.Right
 
-const add1 = (x) => new Just(x + 1)
+function add1 (x) { return x + 1 }
 
 function dot (prop) {
-  return (obj) => obj[prop] ? new Just(obj[prop]) : new Nothing
+  return (obj) => obj[prop] 
+    ? new Just(obj[prop]) 
+    : new Nothing
 }
 
 // findWhere (Object a) :: [a] -> Object -> Maybe a
 function findWhere (list, hash) {
-  var keys = Object.keys(hash)
-  var stillValid = true
+  let found, stillValid, i, key
 
-  for (var i = 0; i < list.length; i++) {
+  for (i = 0; i < list.length; i++) {
     stillValid = true
-    for (var j = 0; j < keys.length; j++) {
-      if (list[i][keys[j]] !== hash[keys[j]]) {
+    for (key in hash) {
+      if (list[i][key] !== hash[key]) {
         stillValid = false
         break
       }
     } 
-    if (stillValid) return new Just(list[i])
+    if (stillValid) {
+      found = list[i]
+      break
+    }
   }
-  return new Nothing
+  return found 
+    ? new Just(found) 
+    : new Nothing
 }
 
 const list = [{age: 5, id: 1}, {age: 3, id: 2}]
 
-const result = Maybe.Interface.unit(1) >>= 
-               add1 >>= 
-               add1
+const props = {age: 5}
 
-const match = findWhere(list, {age: 5})
+const moreProps = {age: 4}
 
-const possibleMatch = findWhere(list, {age: 4})
+const match = findWhere(list, props)
 
-const idForTarget = findWhere(list, {age: 5}) >>= 
-                    dot('id')
+const possibleMatch = findWhere(list, moreProps)
+
+//expanded, 
+const expanded = Maybe.Interface.bindM(
+                   Maybe.Interface.bindM(
+                     findWhere(list, props), 
+                     dot('id')
+                   ),
+                   Maybe.Interface.unit $$ add1
+                 )
+
+const withoutClosure = findWhere(list, props) >>= 
+                    dot('id') >>=
+                    Maybe.Interface.unit $$ add1
+
+const withClosure = findWhere(list, props) >>= 
+                 ((x) => dot('id')(x) >>= 
+                   ((id) => Maybe.Interface.unit(id + 1))
+                 )
+
+//var withDo = DO { 
+//  x <- findWhere(list, props)
+//  id <- dot('id')(x)
+//}
 
 
-log(idForTarget)
+log(expanded)
+log(withoutClosure)
+log(withClosure)
 log(match)
 log(possibleMatch)
-log(result)
 
-DO { 
-  x <- findWhere(list, {age: 5})
-  id <- dot('id')(x)
-  Maybe.Interface.bind(id)
-}
