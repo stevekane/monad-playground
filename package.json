@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "node --harmony_arrow_functions --harmony_classes test.js",
-    "quick": "sjs --module ./macros/infix.js quick.js | node --harmony_arrow_functions --harmony_classes",
+    "quick": "sjs --module ./macros/monads.js quick.js | node --harmony_arrow_functions --harmony_classes",
     "ts": "tsc --module commonjs -outDir compiled tssrc/*.ts && cat compiled/main.js"
   },
   "repository": {
