@@ -1,5 +1,5 @@
 operator (>>=) 15 left 
-  { $left, $right } => #{ $left.bindM($left, $right) }
+  { $left, $right } => #{ $left.bindM($right) }
 
 operator ($$) 16 left
   { $left, $right } => #{ function (x) { return $left($right(x)) } }

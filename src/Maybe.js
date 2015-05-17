@@ -1,33 +1,28 @@
 'use strict'
 
-const Interface = {
-  unit(value) {
-    return new Just(value)
-  },
-
-  bindM(ma, fn) {
-    if (ma instanceof Just) return fn(ma.value)
-    else                    return new Nothing
-  },
-
-  fmap(fn, ma) {
-    if (ma instanceof Just) return new Just(fn(ma.value))
-    else                    return new Nothing
-  },
-
-  toString() { 
-    return ''
-  }
-}
-
 function Just (value) {
-  this.value = value
+  return Object.setPrototypeOf({value}, Just.prototype)
 }
-Just.prototype = Object.create(Interface)
 Just.prototype.toString = () => `Just ${this.value}`
+Just.prototype.bindM = (fn) => fn(this.value)
+Just.prototype.fmap = (fn) => Just(fn(ma.value))
+Just.prototype.returnM = (value) => Just(value)
 
-function Nothing () {}
-Nothing.prototype = Object.create(Interface)
+function Nothing () {
+  const nothing = {}
+  
+  Object.setPrototypeOf(nothing, Nothing.prototype)
+  return nothing
+}
 Nothing.prototype.toString = () => 'Nothing'
+Nothing.prototype.bindM = (fn) => Nothing
+Nothing.prototype.fmap = (fn) => Nothing
+Nothing.prototype.returnM = (value) => Just(value)
 
-module.exports = { Interface, Just, Nothing }
+module.exports = {
+  Just,
+  Nothing,
+  returnM: (value) => Just(value),
+  bindM: (ma, fn) => ma instanceof Just ? fn(ma.value) : Nothing(),
+  fmap: (fn, ma) => ma instanceof Just ? Just(fn(ma.value)) : Nothing(),
+}
