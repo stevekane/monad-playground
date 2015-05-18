@@ -28,5 +28,8 @@
   "homepage": "https://github.com/stevekane/monad-playground",
   "devDependencies": {
     "tape": "^4.0.0"
+  },
+  "dependencies": {
+    "sweet.js": "^0.7.4"
   }
 }

@@ -9,14 +9,11 @@ Just.prototype.fmap = (fn) => Just(fn(ma.value))
 Just.prototype.returnM = (value) => Just(value)
 
 function Nothing () {
-  const nothing = {}
-  
-  Object.setPrototypeOf(nothing, Nothing.prototype)
-  return nothing
+  return Object.setPrototypeOf({}, Nothing.prototype)
 }
 Nothing.prototype.toString = () => 'Nothing'
-Nothing.prototype.bindM = (fn) => Nothing
-Nothing.prototype.fmap = (fn) => Nothing
+Nothing.prototype.bindM = (fn) => Nothing()
+Nothing.prototype.fmap = (fn) => Nothing()
 Nothing.prototype.returnM = (value) => Just(value)
 
 module.exports = {

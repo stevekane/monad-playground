@@ -10,7 +10,7 @@ function add1 (x) { return x + 1 }
 
 function dot (prop) {
   return function (obj) {
-    return obj[prop] ? Just(obj[prop]) : Nothing
+    return obj[prop] ? Just(obj[prop]) : Nothing()
   }
 }
 
@@ -32,7 +32,7 @@ function findWhere (list, hash) {
   }
   return found 
     ? Just(found) 
-    : Nothing
+    : Nothing()
 }
 
 const getId = dot('id')
@@ -73,14 +73,20 @@ const prefixClosure =
     }))
   }))
 
-//var withDo = DO { 
-//  x <- findWhere(list, props)
-//  id <- dot('id')(x)
-//  unitM(id + 1)
-//}
+const shouldBeNothing = 
+  findWhere(list, moreProps) >>=
+  getId >>=
+  Maybe.returnM $$ add1
+
+var withDo = DO { 
+  person = findWhere(list, props)
+  id = dot('id')(person)
+  unitM(id + 1)
+}
 
 
 log(prefixWithoutClosure)
 log(withoutClosure)
 log(withClosure)
 log(prefixClosure)
+log(shouldBeNothing)

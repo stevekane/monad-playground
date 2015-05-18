@@ -4,22 +4,22 @@ operator (>>=) 15 left
 operator ($$) 16 left
   { $left, $right } => #{ function (x) { return $left($right(x)) } }
 
+macro DoChunk {
+  case {_ $name: ident = $ma:expr} => {
+    return #{
+      $ma.bindM(function ($name) { 
+        return DO { $rest ... }
+      }) 
+    }
+  }
+  
+  case {_ $ma:expr } => {
+    return #{$ma}
+  }
+}
+
 macro DO {
-  case {_ { $($name:ident <- $fn:expr) ... } } => {
-    return #{
-      $($name = $fn) ...
-    }
-  }
-  case {_ { $($name:ident <- $fn:expr) ... $more:expr} } => {
-    return #{
-      $($name = $fn) ...
-    }
-  }
-  case {_ { $expr:expr ... } } => {
-    return #{
-      $expr ...
-    }
-  }
+  case {_ $doChunk:DoChunk ...}
 }
 
 export DO
