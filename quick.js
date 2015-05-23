@@ -79,17 +79,16 @@ const withDoRaw = findWhere(list, props).bindM((person) => {
   });
 })
 
-
-const shouldBeNothing = 
-  findWhere(list, moreProps) >>=
-  getId >>=
-  Maybe.returnM $$ add1
-
 const withDo = DO {
   person <= findWhere(list, props)
   id <= dot('id')(person)
   Maybe.returnM(id + 1)
 }
+
+const shouldBeNothing = 
+  findWhere(list, moreProps) >>=
+  getId >>=
+  Maybe.returnM $$ add1
 
 const shouldBeNothingWithDo = DO {
   person <= findWhere(list, moreProps)
@@ -97,19 +96,22 @@ const shouldBeNothingWithDo = DO {
   Maybe.returnM(id + 1)
 }
 
-/*
-var x = id(5)
-var y = id(6)
-console.log(x + y)
+const possibleFullName = DO {
+  person <= findWhere(list, props)
+  first <= dot('first')(person)
+  last <= dot('last')(person)
+  var title = 'Mr.'
+  var wholeName = title + ' ' + first + ' ' + last
+  Maybe.returnM(wholeName)
+}
 
-f compose g => f(g(x))
-
-function (x) {
-  return function (y) {
-    console.log(x + y) 
-  }(id(6))
-}(id(5))
-*/
+const failedFullName = DO {
+  person <= findWhere(list, moreProps)
+  first <= dot('first')(person)
+  last <= dot('last')(person)
+  var wholeName = first + ' ' + last
+  Maybe.returnM(wholeName)
+}
 
 log(prefixWithoutClosure)
 log(withoutClosure)
@@ -119,3 +121,5 @@ log(withDoRaw)
 log(withDo)
 log(shouldBeNothing)
 log(shouldBeNothingWithDo)
+log(possibleFullName)
+log(failedFullName)
