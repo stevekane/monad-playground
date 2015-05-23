@@ -73,20 +73,49 @@ const prefixClosure =
     }))
   }))
 
+const withDoRaw = findWhere(list, props).bindM((person) => {
+  return dot('id')(person).bindM((id) => {
+    return Maybe.returnM(id + 1);
+  });
+})
+
+
 const shouldBeNothing = 
   findWhere(list, moreProps) >>=
   getId >>=
   Maybe.returnM $$ add1
 
-var withDo = DO { 
-  person = findWhere(list, props)
-  id = dot('id')(person)
-  unitM(id + 1)
+const withDo = DO {
+  person <= findWhere(list, props)
+  id <= dot('id')(person)
+  Maybe.returnM(id + 1)
 }
 
+const shouldBeNothingWithDo = DO {
+  person <= findWhere(list, moreProps)
+  id <= dot('id')(person)
+  Maybe.returnM(id + 1)
+}
+
+/*
+var x = id(5)
+var y = id(6)
+console.log(x + y)
+
+f compose g => f(g(x))
+
+function (x) {
+  return function (y) {
+    console.log(x + y) 
+  }(id(6))
+}(id(5))
+*/
 
 log(prefixWithoutClosure)
 log(withoutClosure)
 log(withClosure)
 log(prefixClosure)
+log(withDoRaw)
+log(withDo)
 log(shouldBeNothing)
+log(shouldBeNothingWithDo)
