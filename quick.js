@@ -80,9 +80,9 @@ const withDoRaw = findWhere(list, props).bindM((person) => {
 })
 
 const withDo = DO {
-  person <= findWhere(list, props)
-  id <= dot('id')(person)
-  Maybe.returnM(id + 1)
+  person <= findWhere(list, props);
+  id <= dot('id')(person);
+  Maybe.returnM(id + 1);
 }
 
 const shouldBeNothing = 
@@ -91,26 +91,27 @@ const shouldBeNothing =
   Maybe.returnM $$ add1
 
 const shouldBeNothingWithDo = DO {
-  person <= findWhere(list, moreProps)
-  id <= dot('id')(person)
-  Maybe.returnM(id + 1)
+  person <= findWhere(list, moreProps);
+  id <= dot('id')(person);
+  Maybe.returnM(id + 1);
 }
 
 const possibleFullName = DO {
-  person <= findWhere(list, props)
-  first <= dot('first')(person)
-  last <= dot('last')(person)
-  var title = 'Mr.'
-  var wholeName = title + ' ' + first + ' ' + last
-  Maybe.returnM(wholeName)
+  person <= findWhere(list, props);
+  first <= dot('first')(person);
+  last <= dot('last')(person);
+  let title = 'Mr.',
+      mantra = "whatever",
+      wholeName = title + ' ' + first + ' ' + last;
+  Maybe.returnM(wholeName);
 }
 
 const failedFullName = DO {
-  person <= findWhere(list, moreProps)
-  first <= dot('first')(person)
-  last <= dot('last')(person)
-  var wholeName = first + ' ' + last
-  Maybe.returnM(wholeName)
+  person <= findWhere(list, moreProps);
+  first <= dot('first')(person);
+  last <= dot('last')(person);
+  let wholeName = first + ' ' + last;
+  Maybe.returnM(wholeName);
 }
 
 log(prefixWithoutClosure)

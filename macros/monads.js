@@ -12,7 +12,7 @@ operator ($$) 16 left
 
 macro DO {
   //multiple var defs
-  case {_ {$name:ident <= $ma:expr var $($k:ident = $v:expr) (var) ... $rest ... }} => {
+  case {_ {$name:ident <= $ma:expr ; let $($k:ident = $v:expr) (,) ... ; $rest ... }} => {
     return #{
       $ma.bindM(function ($name) {
         $(var $k = $v;) ...
@@ -22,7 +22,7 @@ macro DO {
   }
 
   //single var def
-  case {_ {$name:ident <= $ma:expr var $k:ident = $v:expr $rest ... }} => {
+  case {_ {$name:ident <= $ma:expr ; let $k:ident = $v:expr ; $rest ... }} => {
     return #{
       $ma.bindM(function ($name) {
         var $k = $v;
@@ -32,7 +32,7 @@ macro DO {
   }
 
   //monadic bindings
-  case {_ {$name:ident <= $ma:expr $rest ... }} => {
+  case {_ {$name:ident <= $ma:expr ; $rest ... }} => {
     return #{
       $ma.bindM(function ($name) {
         return DO { $rest ... }
@@ -41,7 +41,7 @@ macro DO {
   }
 
   //final expressions
-  case {_ {$expr:expr}} => {
+  case {_ {$expr:expr ; }} => {
     return #{$expr}
   }
 
