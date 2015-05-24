@@ -42,16 +42,6 @@ macro DO {
     }
   }
 
-  //single let def
-  case {_ {$name:ident <= $ma:expr ; let $k:ident = $v:expr ; $rest ... }} => {
-    return #{
-      $ma.bindM(function ($name) {
-        var $k = $v;
-        return DO { $rest ... }
-      })
-    }
-  }
-
   //monadic bindings
   case {_ {$name:ident <= $ma:expr ; $rest ... }} => {
     return #{
