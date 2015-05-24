@@ -20,9 +20,6 @@ operator ($$) 16 left
  * let foo = bar;
  *
  * let foo = bar,
- * let x = y;
- *
- * let foo = bar,
  *     x = y;
  *
  * At the moment, awkward mix-and-match as shown below is not supported (though in theory
@@ -45,11 +42,11 @@ macro DO {
     }
   }
 
-  //multiple lets
-  case {_ {$name:ident <= $ma:expr ; let $($k:ident = $v:expr) (let) ... ; $rest ... }} => {
+  //single let def
+  case {_ {$name:ident <= $ma:expr ; let $k:ident = $v:expr ; $rest ... }} => {
     return #{
       $ma.bindM(function ($name) {
-        $(var $k = $v;) ...
+        var $k = $v;
         return DO { $rest ... }
       })
     }
