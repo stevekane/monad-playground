@@ -10,8 +10,32 @@ operator ($$) 16 left
     function (x) { return $left($right(x)) } 
   }
 
+/* Any interstitial var defs must be bounded by the nearest two monadic values
+ * in order to properly nest the expanded function calls.  This means that syntax
+ * parsing gets a bit trickier as let defitions don't stand on their own completely
+ * but rather are contextualized completely by the nearby monads.  As a result,
+ * several cases are provided to match different possible syntaxes for declaring
+ * interstial values.
+ *
+ * let foo = bar;
+ *
+ * let foo = bar,
+ * let x = y;
+ *
+ * let foo = bar,
+ *     x = y;
+ *
+ * At the moment, awkward mix-and-match as shown below is not supported (though in theory
+ * it could be).
+ *
+ * let foo = bar;
+ * let x = y,
+ *     z = b;
+ *
+ * */
+
 macro DO {
-  //multiple var defs
+  //comma-separated multiple lets
   case {_ {$name:ident <= $ma:expr ; let $($k:ident = $v:expr) (,) ... ; $rest ... }} => {
     return #{
       $ma.bindM(function ($name) {
@@ -21,11 +45,11 @@ macro DO {
     }
   }
 
-  //single var def
-  case {_ {$name:ident <= $ma:expr ; let $k:ident = $v:expr ; $rest ... }} => {
+  //multiple lets
+  case {_ {$name:ident <= $ma:expr ; let $($k:ident = $v:expr) (let) ... ; $rest ... }} => {
     return #{
       $ma.bindM(function ($name) {
-        var $k = $v;
+        $(var $k = $v;) ...
         return DO { $rest ... }
       })
     }
