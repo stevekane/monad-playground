@@ -30,13 +30,18 @@ operator ($$) 16 left
  *     z = b;
  *
  * */
+macro LET_BINDINGS {
+  rule { let $($k:ident = $v:expr) (,) ... } => {
+    $(var $k = $v;) ...
+  }
+}
 
 macro DO {
-  //comma-separated multiple lets
-  case {_ {$name:ident <= $ma:expr ; let $($k:ident = $v:expr) (,) ... ; $rest ... }} => {
+  //let bindings
+  case {_ {$name:ident <= $ma:expr ; $letBindings:LET_BINDINGS ; $rest ... }} => {
     return #{
       $ma.bindM(function ($name) {
-        $(var $k = $v;) ...
+        $letBindings
         return DO { $rest ... }
       })
     }
