@@ -24,7 +24,8 @@ function getFullName (user) {
 const fetch = DO {
   person1 <- getRandomUser()
   person2 <- getRandomUser()
-  Task.returnM('You fetched ' + getFullName(person1) + ' and ' + getFullName(person2))
+  let nameSummary = 'You fetched ' + getFullName(person1) + ' and ' + getFullName(person2)
+  Task.returnM(nameSummary)
 }
 
 fetch.fmap(log)
