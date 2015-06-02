@@ -3,7 +3,7 @@
 function Task (fork) {
   return Object.setPrototypeOf({fork}, Task.prototype)
 }
-Task.prototype.toString = () => `Task of ${this.fork.name}`
+Task.prototype.toString = () => `Task of ${this.fork.name || 'Anonymous'}`
 Task.prototype.bindM = (fn) => {
   const ma = this
 
@@ -14,18 +14,17 @@ Task.prototype.bindM = (fn) => {
   })
 }
 Task.prototype.fmap = (fn) => {
-  const ma = this
-  const resolve = function (val) {
-    return Task(fn(val))
-  }
-  return ma.fork(resolve)
+  return this.fork(function (val) {
+    return Task(fn(val)) 
+  })
 }
+Task.prototype.returnM = returnM
+
 function returnM (value) {
   return Task(function baseResolve (resolve) {
     setTimeout(resolve, 1, value)
   })
 }
-Task.prototype.returnM = returnM
 
 module.exports = {
   Task,

@@ -8,8 +8,6 @@ const Just = Maybe.Just
 const Nothing = Maybe.Nothing
 const doMacro = fs.readFileSync(__dirname + '/../../macros/do-block.js', 'utf-8')
 
-console.log(doMacro)
-
 function dot (prop) {
   return function (obj) {
     return obj[prop] ? Just(obj[prop]) : Nothing()
