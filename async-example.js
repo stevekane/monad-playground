@@ -24,7 +24,7 @@ function getFullName (user) {
 const fetch = DO {
   person1 <- getRandomUser()
   person2 <- getRandomUser()
-  var nameSummary = 'You fetched ' + getFullName(person1) + ' and ' + getFullName(person2)
+  let nameSummary = 'You fetched ' + getFullName(person1) + ' and ' + getFullName(person2)
   var punctuation = ' TADA!!!!!!!!!!'
   Task.returnM(nameSummary + punctuation)
 }
