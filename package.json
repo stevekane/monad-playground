@@ -7,6 +7,7 @@
     "test": "node --harmony_arrow_functions --harmony_classes test.js",
     "sweet": "sjs -r --module ./macros/monads.js quick.js",
     "quick": "sjs -r --module ./macros/monads.js quick.js | node --harmony_arrow_functions --harmony_classes",
+    "async": "sjs -r --module ./macros/do-block.js async-example.js | node --harmony_arrow_functions --harmony_classes",
     "ts": "tsc --module commonjs -outDir compiled tssrc/*.ts && cat compiled/main.js"
   },
   "repository": {
@@ -27,6 +28,7 @@
   },
   "homepage": "https://github.com/stevekane/monad-playground",
   "devDependencies": {
+    "request": "^2.57.0",
     "sweet.js": "^0.7.4",
     "tape": "^4.0.0"
   },

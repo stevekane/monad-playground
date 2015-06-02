@@ -1,5 +1,5 @@
 'use strict'
 
-//require('./tests/Future')
-require('./tests/Maybe')
-require('./tests/macros/do-block')
+//require('./tests/Maybe')
+require('./tests/Task')
+//require('./tests/macros/do-block')

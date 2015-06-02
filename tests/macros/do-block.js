@@ -6,7 +6,9 @@ const sweet = require('sweet.js')
 const Maybe = require('../../src/Maybe')
 const Just = Maybe.Just
 const Nothing = Maybe.Nothing
-const doMacro = fs.readFileSync(__dirname + '/../../macros/do-block.js')
+const doMacro = fs.readFileSync(__dirname + '/../../macros/do-block.js', 'utf-8')
+
+console.log(doMacro)
 
 function dot (prop) {
   return function (obj) {
@@ -64,16 +66,25 @@ const src2 = `
   }
 `
 
+const src3 = `
+  DO {
+    findWhere(list, props) 
+  }
+`
+
 const mixSrc = `
-  findWhere(list, props).bindM(
-    dot('id')).bindM(function (id) { return Maybe.returnM(id) })
+  findWhere(list, props)
+  .bindM(dot('id'))
+  .bindM(function (id) { return Maybe.returnM(id) })
 `
 
 const code = sweet.compile(src, compileOptions).code
 const code2 = sweet.compile(src2, compileOptions).code
+const code3 = sweet.compile(src3, compileOptions).code
 
 console.log(code)
 console.log(code2)
+console.log(code3)
 //console.log(eval(mixSrc))
 console.log(eval(code))
 console.log(eval(code2))

@@ -46,3 +46,4 @@ macro DO {
 }
 
 export DO
+export >>=
