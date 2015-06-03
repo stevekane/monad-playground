@@ -92,6 +92,8 @@ const nameNotFound2 = pluck('info')(nestedObject) >>=
                       pluck('personalInfo') >>=
                       pluck('first')
 
+const nameNotFound3 = pluckDeep('info.personalInfo.first')(nestedObject)
+
 logStr(fetch)
 fetch.fmap(log)
 logStr(possibleName)
@@ -99,3 +101,4 @@ logStr(possibleName2)
 logStr(possibleName3)
 logStr(nameNotFound)
 logStr(nameNotFound2)
+logStr(nameNotFound3)
